@@ -1,0 +1,40 @@
+<div class="productCart-wrapper">
+  <article class="productCart" *ngFor="let product of myCart$ | async">
+    <div class="productCart-body">
+      <p>{{ product.title }}</p>
+      <div class="productCart-body-info">
+        <p>$ {{ product.price }}</p>
+        <p>{{ product.cantidad }} uds</p>
+      </div>
+    </div>
+    <div class="productCart-total">
+      <p>$ {{ totalProduct(product.price, product.cantidad) }}</p>
+    </div>
+    <div class="productCart-buttons">
+      <div class="productCart-buttons-operators">
+        <i
+          class="fa-solid fa-minus"
+          (click)="updateUnits('minus', product.id)"></i>
+        <span>{{ product.cantidad }}</span>
+        <i
+          class="fa-solid fa-plus"
+          (click)="updateUnits('add', product.id)"></i>
+      </div>
+      <i class="fa-solid fa-trash" (click)="deleteProduct(product.id)"></i>
+    </div>
+  </article>
+  <div class="cartTotal">
+    <p class="cartTotal-total">Total: $ {{ totalCart() }}</p>
+    <button class="proceed-to-payment-btn" (click)="proceedToPayment()">Proceder al Pago</button>
+
+    <div *ngIf="showPaymentForm" class="form-container">
+      <form (submit)="submitPaymentInfo()">
+        <input type="text" [(ngModel)]="paymentInfo.name" name="name" placeholder="Nombre Completo" required>
+        <input type="phone" [(ngModel)]="paymentInfo.phone" name="phone" placeholder="Número telefónico" required>
+        <input type="email" [(ngModel)]="paymentInfo.email" name="email" placeholder="Correo Electrónico" required>
+        <button type="submit">Enviar Información de Pago</button>
+      </form>
+    </div>
+
+
+</div>
